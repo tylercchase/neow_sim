@@ -1,4 +1,5 @@
 @tool
+class_name NeowManager
 extends Node3D
 
 var AU: float = 149597870700
@@ -12,24 +13,9 @@ var STEP_AMOUNT: int = AMOUNT_OF_DAYS / STEP_SIZE
 @export var test_node: Node3D
 
 
-class KeplerElements:
-	var semi_major_axis: float
-	var eccentricity: float
-	var argument_periaps: float
-	var longitude_ascending_node: float
-	var eccentric_anomaly: float
-	var inclination: float
-	var true_anomaly: float
-	var mean_anomaly: float
-	var epoch_t0: float
-	var epoch_t: float
 
-
-var test: NeowObject
-var coords_local: Vector3
 
 func _ready():
-
 	test_object()
 
 
@@ -44,10 +30,6 @@ func test_object():
 			neow_object.set(i, new_orbit_data)
 			continue
 		neow_object.set(i, neow_object_json[i])
-	test = neow_object
-	print(test)
-	print(test.orbital_data)
-	keplerian_to_cartesian(test)
 
 
 
@@ -97,7 +79,7 @@ func calc_algo(body: KeplerElements) -> Vector3:
 	rt.z = ot.x * sin(body.argument_periaps)*sin(body.inclination)+ot.y * cos(body.argument_periaps)*sin(body.inclination);
 	return rt
 
-func keplerian_to_cartesian(orbit: NeowObject):
+func keplerian_to_cartesian(orbit: NeowObject.OrbitData):
 	print(orbit.orbital_data.eccentricity)
 
 	var kepler_element := KeplerElements.new()
@@ -112,8 +94,13 @@ func keplerian_to_cartesian(orbit: NeowObject):
 	kepler_element.epoch_t0 = Time.get_unix_time_from_datetime_string(orbit.orbital_data.first_observation_date)
 	kepler_element.epoch_t = Time.get_unix_time_from_datetime_string(orbit.orbital_data.last_observation_date)
 
-	coords_local = calc_algo(kepler_element)
-	print(coords_local.x)
-	print(coords_local.y)
-	print(coords_local.z)
-	test_node.global_position = Vector3(coords_local.x*conversion_factor, coords_local.z*conversion_factor, coords_local.y*conversion_factor)
+	var coords_local := calc_algo(kepler_element)
+	var converted_coords = Vector3(coords_local.x*conversion_factor, coords_local.z*conversion_factor, coords_local.y*conversion_factor)
+	return converted_coords
+
+func keplerian_to_cartesian_with_elements(kepler_element: KeplerElements) -> Vector3:
+	var thing = kepler_element.duplicate()
+	var coords_local := calc_algo(thing)
+	var converted_coords = Vector3(coords_local.x*conversion_factor, coords_local.z*conversion_factor, coords_local.y*conversion_factor)
+	return converted_coords
+	

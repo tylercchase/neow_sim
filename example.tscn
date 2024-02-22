@@ -1,12 +1,15 @@
-[gd_scene load_steps=24 format=3 uid="uid://vrqn1sidmohy"]
+[gd_scene load_steps=29 format=3 uid="uid://vrqn1sidmohy"]
 
 [ext_resource type="Texture2D" uid="uid://bq33q81jxrx46" path="res://addons/naejimer_3d_planet_generator/noises/planet_no_atmosphere.tres" id="2_0exxh"]
 [ext_resource type="Shader" path="res://addons/naejimer_3d_planet_generator/shaders/clouds.gdshader" id="5_n28e4"]
+[ext_resource type="Script" path="res://src/manager/test_object.gd" id="5_wqh7s"]
 [ext_resource type="PackedScene" uid="uid://c1lxtdgeggnej" path="res://addons/naejimer_3d_planet_generator/scenes/star.tscn" id="6_7xwvl"]
+[ext_resource type="Script" path="res://src/manager/kepler_elements.gd" id="6_fxjm5"]
 [ext_resource type="Texture2D" uid="uid://b4nta4b1auodv" path="res://addons/naejimer_3d_planet_generator/noises/planet_terrestrial.tres" id="6_p021g"]
 [ext_resource type="Shader" path="res://addons/naejimer_3d_planet_generator/shaders/body.gdshader" id="7_7u5l8"]
 [ext_resource type="PackedScene" uid="uid://bnyoptq3px48e" path="res://src/manager/neow_manager.tscn" id="7_n7t7e"]
 [ext_resource type="Shader" path="res://addons/naejimer_3d_planet_generator/shaders/atmosphere.gdshader" id="8_jluyq"]
+[ext_resource type="Script" path="res://free_look_camera.gd" id="9_k7dhp"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_l4rno"]
 render_priority = 0
@@ -65,6 +68,19 @@ shader_parameter/noise = ExtResource("6_p021g")
 
 [sub_resource type="SphereMesh" id="SphereMesh_7wyn3"]
 material = SubResource("ShaderMaterial_4r4s0")
+
+[sub_resource type="Resource" id="Resource_u2a6p"]
+script = ExtResource("6_fxjm5")
+semi_major_axis = 149.598
+eccentricity = 0.017
+argument_periaps = 147.095
+longitude_ascending_node = -11.261
+eccentric_anomaly = 0.0
+inclination = 0.0
+true_anomaly = 5.82884
+mean_anomaly = 0.0
+epoch_t0 = 1983.0
+epoch_t = 2010.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_nmd1c"]
 render_priority = 0
@@ -130,6 +146,19 @@ glow_blend_mode = 0
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wv5xx"]
 albedo_color = Color(0.803922, 0.517647, 0, 1)
 
+[sub_resource type="Resource" id="Resource_8j0bo"]
+script = ExtResource("6_fxjm5")
+semi_major_axis = 1.158
+eccentricity = 0.277
+argument_periaps = 0.837
+longitude_ascending_node = 298.499
+eccentric_anomaly = 0.0
+inclination = 10.09
+true_anomaly = 100.821
+mean_anomaly = 100.821
+epoch_t0 = 1983.0
+epoch_t = 2010.0
+
 [node name="Example" type="Node3D"]
 
 [node name="Planets" type="Node3D" parent="."]
@@ -139,10 +168,13 @@ transform = Transform3D(0.239056, -0.320706, 1.06771e-06, 0.320706, 0.239056, 1.
 mesh = SubResource("SphereMesh_wxhma")
 skeleton = NodePath("../..")
 
-[node name="PlanetTerrestrial" type="MeshInstance3D" parent="Planets"]
-transform = Transform3D(0.992289, 0, 0.123952, 0, 1, 0, -0.123952, 0, 0.992289, -5.16394, 0, 0)
+[node name="PlanetTerrestrial" type="MeshInstance3D" parent="Planets" node_paths=PackedStringArray("neow_manager")]
+transform = Transform3D(0.839696, 0, 0.542809, 0, 1, 0, -0.542809, 0, 0.839696, -6.6828, 0, 7.12315)
 mesh = SubResource("SphereMesh_7wyn3")
 skeleton = NodePath(".")
+script = ExtResource("5_wqh7s")
+neow_manager = NodePath("../../NeowManager")
+kepler_data = SubResource("Resource_u2a6p")
 
 [node name="Atmosphere" type="MeshInstance3D" parent="Planets/PlanetTerrestrial"]
 transform = Transform3D(1.01991, 0, -0.0138765, 0, 1.02, 0, 0.0138765, 0, 1.01991, 0, 0, 0)
@@ -164,7 +196,7 @@ anim_player = NodePath("../AnimationPlayer")
 parameters/TimeScale/scale = 0.08
 
 [node name="Star" parent="Planets" instance=ExtResource("6_7xwvl")]
-transform = Transform3D(2.38481, 0, 3.21134, 0, 4, 0, -3.21134, 0, 2.38481, 0, 0, 0)
+transform = Transform3D(-1.58858, 0, -3.67103, 0, 4, 0, 3.67103, 0, -1.58858, 0, 0, 0)
 layers = 2
 skeleton = NodePath("../..")
 
@@ -179,11 +211,17 @@ light_cull_mask = 4294967293
 sky_mode = 1
 
 [node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 0)
+script = ExtResource("9_k7dhp")
 
 [node name="NeowManager" parent="." node_paths=PackedStringArray("test_node") instance=ExtResource("7_n7t7e")]
-test_node = NodePath("../CSGSphere3D")
+conversion_factor = 0.001
+test_node = NodePath("../TestAsteroid")
 
-[node name="CSGSphere3D" type="CSGSphere3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.16326, 16.4715, -12.8328)
+[node name="TestAsteroid" type="CSGSphere3D" parent="." node_paths=PackedStringArray("neow_manager")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00131261, 0.000866502, 7.24566e-05)
 radius = 1.417
 material = SubResource("StandardMaterial3D_wv5xx")
+script = ExtResource("5_wqh7s")
+neow_manager = NodePath("../NeowManager")
+kepler_data = SubResource("Resource_8j0bo")
