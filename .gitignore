@@ -1,0 +1,4 @@
+# Godot 4+ specific ignores
+.godot/
+src/manager/neow_object.json
+addons/

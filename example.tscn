@@ -1,0 +1,181 @@
+[gd_scene load_steps=23 format=3 uid="uid://vrqn1sidmohy"]
+
+[ext_resource type="Texture2D" uid="uid://bq33q81jxrx46" path="res://addons/naejimer_3d_planet_generator/noises/planet_no_atmosphere.tres" id="2_0exxh"]
+[ext_resource type="Shader" path="res://addons/naejimer_3d_planet_generator/shaders/clouds.gdshader" id="5_n28e4"]
+[ext_resource type="PackedScene" uid="uid://c1lxtdgeggnej" path="res://addons/naejimer_3d_planet_generator/scenes/star.tscn" id="6_7xwvl"]
+[ext_resource type="Texture2D" uid="uid://b4nta4b1auodv" path="res://addons/naejimer_3d_planet_generator/noises/planet_terrestrial.tres" id="6_p021g"]
+[ext_resource type="Shader" path="res://addons/naejimer_3d_planet_generator/shaders/body.gdshader" id="7_7u5l8"]
+[ext_resource type="PackedScene" uid="uid://bnyoptq3px48e" path="res://src/manager/neow_manager.tscn" id="7_n7t7e"]
+[ext_resource type="Shader" path="res://addons/naejimer_3d_planet_generator/shaders/atmosphere.gdshader" id="8_jluyq"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_l4rno"]
+render_priority = 0
+shader = ExtResource("7_7u5l8")
+shader_parameter/emit = 0.0
+shader_parameter/color_1 = Color(0.431373, 0.282353, 0.0980392, 1)
+shader_parameter/color_1_treshold = 0.408
+shader_parameter/color_1_roughness = 0.939
+shader_parameter/color_1_emit = false
+shader_parameter/color_2 = Color(0.505882, 0.294118, 0.141176, 1)
+shader_parameter/color_2_treshold = 0.577
+shader_parameter/color_3 = Color(0.713726, 0.439216, 0.360784, 1)
+shader_parameter/color_3_treshold = 0.44
+shader_parameter/color_4 = Color(0.360784, 0.301961, 0.0705882, 1)
+shader_parameter/color_4_treshold = 0.689
+shader_parameter/color_5 = Color(0.290196, 0.309804, 0.301961, 1)
+shader_parameter/color_5_treshold = 1.0
+shader_parameter/noise_gaseous = false
+shader_parameter/noise_gaseous_speed = 0.0025
+shader_parameter/noise_scale = 1.273
+shader_parameter/noise = ExtResource("2_0exxh")
+
+[sub_resource type="SphereMesh" id="SphereMesh_wxhma"]
+material = SubResource("ShaderMaterial_l4rno")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_c8avg"]
+render_priority = 0
+shader = ExtResource("5_n28e4")
+shader_parameter/speed = 0.005
+shader_parameter/brightness = 0.5
+shader_parameter/threshold = 1.2
+shader_parameter/fluffiness = 0.1
+shader_parameter/noise_texture = ExtResource("6_p021g")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4r4s0"]
+render_priority = 0
+next_pass = SubResource("ShaderMaterial_c8avg")
+shader = ExtResource("7_7u5l8")
+shader_parameter/emit = 0.024
+shader_parameter/color_1 = Color(0.17, 0.55, 1, 1)
+shader_parameter/color_1_treshold = 0.54
+shader_parameter/color_1_roughness = 0.1
+shader_parameter/color_1_emit = false
+shader_parameter/color_2 = Color(1, 0.94, 0.76, 1)
+shader_parameter/color_2_treshold = 0.56
+shader_parameter/color_3 = Color(0.34, 0.74, 0.5, 1)
+shader_parameter/color_3_treshold = 0.6
+shader_parameter/color_4 = Color(0.27, 0.62, 0.42, 1)
+shader_parameter/color_4_treshold = 0.7
+shader_parameter/color_5 = Color(1, 1, 1, 1)
+shader_parameter/color_5_treshold = 1.0
+shader_parameter/noise_gaseous = false
+shader_parameter/noise_gaseous_speed = 0.0025
+shader_parameter/noise_scale = 1.0
+shader_parameter/noise = ExtResource("6_p021g")
+
+[sub_resource type="SphereMesh" id="SphereMesh_7wyn3"]
+material = SubResource("ShaderMaterial_4r4s0")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nmd1c"]
+render_priority = 0
+shader = ExtResource("8_jluyq")
+shader_parameter/color_1 = Color(0, 0.12, 0.27, 1)
+shader_parameter/color_2 = Color(0.63, 0.78, 1, 1)
+shader_parameter/alpha = 0.3
+shader_parameter/amount = 4.5
+shader_parameter/intensity = 4.0
+shader_parameter/emit = false
+
+[sub_resource type="SphereMesh" id="SphereMesh_lk7tp"]
+material = SubResource("ShaderMaterial_nmd1c")
+
+[sub_resource type="Animation" id="Animation_2yx44"]
+resource_name = "Rotation"
+length = 60.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 60),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 6.28319, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_37sus"]
+_data = {
+"Rotation": SubResource("Animation_2yx44")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_udpb3"]
+animation = &"Rotation"
+
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_ji6rl"]
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_wujo7"]
+graph_offset = Vector2(-274.692, 86.5361)
+nodes/Animation/node = SubResource("AnimationNodeAnimation_udpb3")
+nodes/Animation/position = Vector2(-20, 140)
+nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_ji6rl")
+nodes/TimeScale/position = Vector2(140, 140)
+node_connections = [&"TimeScale", 0, &"Animation", &"output", 0, &"TimeScale"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_e0wq0"]
+
+[sub_resource type="Sky" id="Sky_rj1jo"]
+sky_material = SubResource("ProceduralSkyMaterial_e0wq0")
+
+[sub_resource type="Environment" id="Environment_icub5"]
+background_mode = 2
+sky = SubResource("Sky_rj1jo")
+glow_enabled = true
+glow_normalized = true
+glow_bloom = 0.2
+glow_blend_mode = 0
+
+[node name="Example" type="Node3D"]
+
+[node name="Planets" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Planets"]
+transform = Transform3D(0.239056, -0.320706, 1.06771e-06, 0.320706, 0.239056, 1.43239e-06, -1.78655e-06, 0, 0.4, -6.81891, 0, 0)
+mesh = SubResource("SphereMesh_wxhma")
+skeleton = NodePath("../..")
+
+[node name="PlanetTerrestrial" type="MeshInstance3D" parent="Planets"]
+transform = Transform3D(0.998193, 0, 0.0600782, 0, 1, 0, -0.0600782, 0, 0.998193, -5.16394, 0, 0)
+mesh = SubResource("SphereMesh_7wyn3")
+skeleton = NodePath(".")
+
+[node name="Atmosphere" type="MeshInstance3D" parent="Planets/PlanetTerrestrial"]
+transform = Transform3D(1.01991, 0, -0.0138765, 0, 1.02, 0, 0.0138765, 0, 1.01991, 0, 0, 0)
+sorting_offset = 5.0
+cast_shadow = 0
+mesh = SubResource("SphereMesh_lk7tp")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Planets/PlanetTerrestrial"]
+libraries = {
+"": SubResource("AnimationLibrary_37sus")
+}
+
+[node name="AnimationTree" type="AnimationTree" parent="Planets/PlanetTerrestrial"]
+libraries = {
+"": SubResource("AnimationLibrary_37sus")
+}
+tree_root = SubResource("AnimationNodeBlendTree_wujo7")
+anim_player = NodePath("../AnimationPlayer")
+parameters/TimeScale/scale = 0.08
+
+[node name="Star" parent="Planets" instance=ExtResource("6_7xwvl")]
+transform = Transform3D(-3.60029, 0, -1.74296, 0, 4, 0, 1.74296, 0, -3.60029, 0, 0, 0)
+layers = 2
+skeleton = NodePath("../..")
+
+[node name="Environment" type="Node3D" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Environment"]
+environment = SubResource("Environment_icub5")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment"]
+transform = Transform3D(-0.258701, 0, 0.965957, 0, 1, 0, -0.965957, 0, -0.258701, 0, 1000, 0)
+light_cull_mask = 4294967293
+sky_mode = 1
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2300, 0, 2000)
+
+[node name="NeowManager" parent="." instance=ExtResource("7_n7t7e")]
