@@ -95,12 +95,12 @@ func keplerian_to_cartesian(orbit: NeowObject.OrbitData):
 	kepler_element.epoch_t = Time.get_unix_time_from_datetime_string(orbit.orbital_data.last_observation_date)
 
 	var coords_local := calc_algo(kepler_element)
-	var converted_coords = Vector3(coords_local.x*conversion_factor, coords_local.z*conversion_factor, coords_local.y*conversion_factor)
+	var converted_coords = Vector3(coords_local.x*conversion_factor, coords_local.y*conversion_factor, coords_local.z*conversion_factor)
 	return converted_coords
 
 func keplerian_to_cartesian_with_elements(kepler_element: KeplerElements) -> Vector3:
 	var thing = kepler_element.duplicate()
 	var coords_local := calc_algo(thing)
-	var converted_coords = Vector3(coords_local.x*conversion_factor, coords_local.z*conversion_factor, coords_local.y*conversion_factor)
+	var converted_coords = Vector3(coords_local.x*conversion_factor, coords_local.y*conversion_factor, coords_local.z*conversion_factor)
 	return converted_coords
 	

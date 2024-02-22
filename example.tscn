@@ -35,6 +35,22 @@ shader_parameter/noise = ExtResource("2_0exxh")
 [sub_resource type="SphereMesh" id="SphereMesh_wxhma"]
 material = SubResource("ShaderMaterial_l4rno")
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wv5xx"]
+albedo_color = Color(0.803922, 0.517647, 0, 1)
+
+[sub_resource type="Resource" id="Resource_8j0bo"]
+script = ExtResource("6_fxjm5")
+semi_major_axis = 1.158
+eccentricity = 0.277
+argument_periaps = 0.837
+longitude_ascending_node = 298.499
+eccentric_anomaly = 0.0
+inclination = 10.09
+true_anomaly = 100.821
+mean_anomaly = 100.821
+epoch_t0 = 1983.0
+epoch_t = 2010.0
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_c8avg"]
 render_priority = 0
 shader = ExtResource("5_n28e4")
@@ -68,15 +84,17 @@ shader_parameter/noise = ExtResource("6_p021g")
 
 [sub_resource type="SphereMesh" id="SphereMesh_7wyn3"]
 material = SubResource("ShaderMaterial_4r4s0")
+radius = 2.0
+height = 4.0
 
 [sub_resource type="Resource" id="Resource_u2a6p"]
 script = ExtResource("6_fxjm5")
-semi_major_axis = 149.598
+semi_major_axis = 1.0
 eccentricity = 0.017
 argument_periaps = 147.095
 longitude_ascending_node = -11.261
 eccentric_anomaly = 0.0
-inclination = 0.0
+inclination = 23.44
 true_anomaly = 5.82884
 mean_anomaly = 0.0
 epoch_t0 = 1983.0
@@ -136,28 +154,12 @@ node_connections = [&"TimeScale", 0, &"Animation", &"output", 0, &"TimeScale"]
 sky_material = SubResource("ProceduralSkyMaterial_e0wq0")
 
 [sub_resource type="Environment" id="Environment_icub5"]
-background_mode = 2
+background_mode = 1
 sky = SubResource("Sky_rj1jo")
 glow_enabled = true
 glow_normalized = true
 glow_bloom = 0.2
 glow_blend_mode = 0
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wv5xx"]
-albedo_color = Color(0.803922, 0.517647, 0, 1)
-
-[sub_resource type="Resource" id="Resource_8j0bo"]
-script = ExtResource("6_fxjm5")
-semi_major_axis = 1.158
-eccentricity = 0.277
-argument_periaps = 0.837
-longitude_ascending_node = 298.499
-eccentric_anomaly = 0.0
-inclination = 10.09
-true_anomaly = 100.821
-mean_anomaly = 100.821
-epoch_t0 = 1983.0
-epoch_t = 2010.0
 
 [node name="Example" type="Node3D"]
 
@@ -168,8 +170,16 @@ transform = Transform3D(0.239056, -0.320706, 1.06771e-06, 0.320706, 0.239056, 1.
 mesh = SubResource("SphereMesh_wxhma")
 skeleton = NodePath("../..")
 
+[node name="TestAsteroid" type="CSGSphere3D" parent="Planets" node_paths=PackedStringArray("neow_manager")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.2522, 1.44913, 17.33)
+radius = 1.417
+material = SubResource("StandardMaterial3D_wv5xx")
+script = ExtResource("5_wqh7s")
+neow_manager = NodePath("../../NeowManager")
+kepler_data = SubResource("Resource_8j0bo")
+
 [node name="PlanetTerrestrial" type="MeshInstance3D" parent="Planets" node_paths=PackedStringArray("neow_manager")]
-transform = Transform3D(0.839696, 0, 0.542809, 0, 1, 0, -0.542809, 0, 0.839696, -6.6828, 0, 7.12315)
+transform = Transform3D(0.853678, 0, 0.520504, 0, 1, 0, -0.520504, 0, 0.853678, 2.55209, 8.55936, 19.3927)
 mesh = SubResource("SphereMesh_7wyn3")
 skeleton = NodePath(".")
 script = ExtResource("5_wqh7s")
@@ -196,7 +206,7 @@ anim_player = NodePath("../AnimationPlayer")
 parameters/TimeScale/scale = 0.08
 
 [node name="Star" parent="Planets" instance=ExtResource("6_7xwvl")]
-transform = Transform3D(-1.58858, 0, -3.67103, 0, 4, 0, 3.67103, 0, -1.58858, 0, 0, 0)
+transform = Transform3D(2.27794, 0, 3.28802, 0, 4, 0, -3.28802, 0, 2.27794, 0, 0, 0)
 layers = 2
 skeleton = NodePath("../..")
 
@@ -215,13 +225,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 0)
 script = ExtResource("9_k7dhp")
 
 [node name="NeowManager" parent="." node_paths=PackedStringArray("test_node") instance=ExtResource("7_n7t7e")]
-conversion_factor = 0.001
-test_node = NodePath("../TestAsteroid")
-
-[node name="TestAsteroid" type="CSGSphere3D" parent="." node_paths=PackedStringArray("neow_manager")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00131261, 0.000866502, 7.24566e-05)
-radius = 1.417
-material = SubResource("StandardMaterial3D_wv5xx")
-script = ExtResource("5_wqh7s")
-neow_manager = NodePath("../NeowManager")
-kepler_data = SubResource("Resource_8j0bo")
+test_node = NodePath("../Planets/TestAsteroid")
