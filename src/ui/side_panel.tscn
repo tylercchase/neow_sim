@@ -1,0 +1,42 @@
+[gd_scene load_steps=4 format=3 uid="uid://c2jj6i14lbbxp"]
+
+[ext_resource type="PackedScene" uid="uid://c2718v0m7ry2s" path="res://src/ui/selected_item_info.tscn" id="1_kivwr"]
+[ext_resource type="PackedScene" uid="uid://ch057gdfpa63q" path="res://src/ui/item_filters.tscn" id="1_xi78b"]
+[ext_resource type="PackedScene" uid="uid://6pyj5fw2ha5l" path="res://src/ui/item_list.tscn" id="2_pph70"]
+
+[node name="SidePanel" type="PanelContainer"]
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 257.0
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Neow Sim"
+horizontal_alignment = 1
+
+[node name="TabContainer" type="TabContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Filters" type="VBoxContainer" parent="VBoxContainer/TabContainer"]
+layout_mode = 2
+
+[node name="SelectedItemInfo" parent="VBoxContainer/TabContainer/Filters" instance=ExtResource("1_kivwr")]
+layout_mode = 2
+
+[node name="ItemFilters" parent="VBoxContainer/TabContainer/Filters" instance=ExtResource("1_xi78b")]
+layout_mode = 2
+
+[node name="ItemList" parent="VBoxContainer/TabContainer/Filters" instance=ExtResource("2_pph70")]
+layout_mode = 2
+
+[node name="Simulation" type="VBoxContainer" parent="VBoxContainer/TabContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/TabContainer/Simulation"]
+layout_mode = 2
+text = "Test"

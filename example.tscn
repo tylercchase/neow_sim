@@ -1,6 +1,5 @@
 [gd_scene load_steps=29 format=3 uid="uid://vrqn1sidmohy"]
 
-[ext_resource type="Texture2D" uid="uid://bq33q81jxrx46" path="res://addons/naejimer_3d_planet_generator/noises/planet_no_atmosphere.tres" id="2_0exxh"]
 [ext_resource type="Shader" path="res://addons/naejimer_3d_planet_generator/shaders/clouds.gdshader" id="5_n28e4"]
 [ext_resource type="Script" path="res://src/manager/test_object.gd" id="5_wqh7s"]
 [ext_resource type="PackedScene" uid="uid://c1lxtdgeggnej" path="res://addons/naejimer_3d_planet_generator/scenes/star.tscn" id="6_7xwvl"]
@@ -10,30 +9,9 @@
 [ext_resource type="PackedScene" uid="uid://bnyoptq3px48e" path="res://src/manager/neow_manager.tscn" id="7_n7t7e"]
 [ext_resource type="Shader" path="res://addons/naejimer_3d_planet_generator/shaders/atmosphere.gdshader" id="8_jluyq"]
 [ext_resource type="Script" path="res://free_look_camera.gd" id="9_k7dhp"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_l4rno"]
-render_priority = 0
-shader = ExtResource("7_7u5l8")
-shader_parameter/emit = 0.0
-shader_parameter/color_1 = Color(0.431373, 0.282353, 0.0980392, 1)
-shader_parameter/color_1_treshold = 0.408
-shader_parameter/color_1_roughness = 0.939
-shader_parameter/color_1_emit = false
-shader_parameter/color_2 = Color(0.505882, 0.294118, 0.141176, 1)
-shader_parameter/color_2_treshold = 0.577
-shader_parameter/color_3 = Color(0.713726, 0.439216, 0.360784, 1)
-shader_parameter/color_3_treshold = 0.44
-shader_parameter/color_4 = Color(0.360784, 0.301961, 0.0705882, 1)
-shader_parameter/color_4_treshold = 0.689
-shader_parameter/color_5 = Color(0.290196, 0.309804, 0.301961, 1)
-shader_parameter/color_5_treshold = 1.0
-shader_parameter/noise_gaseous = false
-shader_parameter/noise_gaseous_speed = 0.0025
-shader_parameter/noise_scale = 1.273
-shader_parameter/noise = ExtResource("2_0exxh")
-
-[sub_resource type="SphereMesh" id="SphereMesh_wxhma"]
-material = SubResource("ShaderMaterial_l4rno")
+[ext_resource type="PackedScene" uid="uid://c2jj6i14lbbxp" path="res://src/ui/side_panel.tscn" id="10_1x8uv"]
+[ext_resource type="Script" path="res://src/manager/object_manager.gd" id="10_7sbqk"]
+[ext_resource type="PackedScene" uid="uid://dn0pge68cmwgu" path="res://src/manager/api_manager.tscn" id="11_tp7kq"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wv5xx"]
 albedo_color = Color(0.803922, 0.517647, 0, 1)
@@ -49,7 +27,7 @@ inclination = 10.09
 true_anomaly = 100.821
 mean_anomaly = 100.821
 epoch_t0 = 1983.0
-epoch_t = 2010.0
+epoch_t = 2035.26
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_c8avg"]
 render_priority = 0
@@ -98,7 +76,7 @@ inclination = 23.44
 true_anomaly = 5.82884
 mean_anomaly = 0.0
 epoch_t0 = 1983.0
-epoch_t = 2010.0
+epoch_t = 2013.49
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_nmd1c"]
 render_priority = 0
@@ -165,21 +143,18 @@ glow_blend_mode = 0
 
 [node name="Planets" type="Node3D" parent="."]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Planets"]
-transform = Transform3D(0.239056, -0.320706, 1.06771e-06, 0.320706, 0.239056, 1.43239e-06, -1.78655e-06, 0, 0.4, -6.81891, 0, 0)
-mesh = SubResource("SphereMesh_wxhma")
-skeleton = NodePath("../..")
-
 [node name="TestAsteroid" type="CSGSphere3D" parent="Planets" node_paths=PackedStringArray("neow_manager")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.2522, 1.44913, 17.33)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -82.7789, 2.02049, 0.958599)
 radius = 1.417
+radial_segments = 27
+rings = 19
 material = SubResource("StandardMaterial3D_wv5xx")
 script = ExtResource("5_wqh7s")
 neow_manager = NodePath("../../NeowManager")
 kepler_data = SubResource("Resource_8j0bo")
 
 [node name="PlanetTerrestrial" type="MeshInstance3D" parent="Planets" node_paths=PackedStringArray("neow_manager")]
-transform = Transform3D(0.853678, 0, 0.520504, 0, 1, 0, -0.520504, 0, 0.853678, 2.55209, 8.55936, 19.3927)
+transform = Transform3D(0.991859, 0, 0.126059, 0, 1, 0, -0.126059, 0, 0.991859, 1.64038, 35.9732, -2.05518)
 mesh = SubResource("SphereMesh_7wyn3")
 skeleton = NodePath(".")
 script = ExtResource("5_wqh7s")
@@ -206,7 +181,7 @@ anim_player = NodePath("../AnimationPlayer")
 parameters/TimeScale/scale = 0.08
 
 [node name="Star" parent="Planets" instance=ExtResource("6_7xwvl")]
-transform = Transform3D(2.27794, 0, 3.28802, 0, 4, 0, -3.28802, 0, 2.27794, 0, 0, 0)
+transform = Transform3D(5.28974, 0, 7.36774, 0, 9.07, 0, -7.36774, 0, 5.28974, 0, 0, 0)
 layers = 2
 skeleton = NodePath("../..")
 
@@ -215,14 +190,21 @@ skeleton = NodePath("../..")
 [node name="WorldEnvironment" type="WorldEnvironment" parent="Environment"]
 environment = SubResource("Environment_icub5")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Environment"]
-transform = Transform3D(-0.258701, 0, 0.965957, 0, 1, 0, -0.965957, 0, -0.258701, 0, 1000, 0)
-light_cull_mask = 4294967293
-sky_mode = 1
-
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 0)
 script = ExtResource("9_k7dhp")
 
 [node name="NeowManager" parent="." node_paths=PackedStringArray("test_node") instance=ExtResource("7_n7t7e")]
+conversion_factor = 75.715
 test_node = NodePath("../Planets/TestAsteroid")
+
+[node name="ObjectManager" type="Node3D" parent="."]
+script = ExtResource("10_7sbqk")
+
+[node name="APIManager" parent="." instance=ExtResource("11_tp7kq")]
+
+[node name="SunLight" type="OmniLight3D" parent="."]
+light_energy = 13.33
+omni_range = 4096.0
+
+[node name="SidePanel" parent="." instance=ExtResource("10_1x8uv")]

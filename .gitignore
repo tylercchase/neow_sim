@@ -2,3 +2,4 @@
 .godot/
 src/manager/neow_object.json
 addons/
+src/singletons/Config.gd

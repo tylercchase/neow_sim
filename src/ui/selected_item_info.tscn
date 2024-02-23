@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://c2718v0m7ry2s"]
+
+[ext_resource type="Script" path="res://src/ui/selected_item_info.gd" id="1_57wy6"]
+
+[node name="SelectedItemInfo" type="PanelContainer"]
+script = ExtResource("1_57wy6")

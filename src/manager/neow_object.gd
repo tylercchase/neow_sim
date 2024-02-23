@@ -1,6 +1,7 @@
 class_name NeowObject
 extends Resource
 
+
 class OrbitData:
 	var orbit_id: String
 	var orbit_determination_date: String
@@ -25,6 +26,7 @@ class OrbitData:
 	var mean_motion: String
 	var equinox: String
 
+
 var id: String
 var neo_reference_id: String
 var name: String
@@ -34,3 +36,15 @@ var absolute_magnitude_h: float
 var is_postentially_hazardous_asteroid: bool
 var is_sentry_object: bool
 var orbital_data: OrbitData
+
+
+class NeowResponse:
+	var count
+	var near_earth_objects: Array[BasicNeowObject]
+
+
+class BasicNeowObject:
+	var link: String
+	var id: String
+	var name: String
+	var diameter

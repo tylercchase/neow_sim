@@ -1,4 +1,3 @@
-@tool
 class_name NeowManager
 extends Node3D
 
@@ -16,11 +15,12 @@ var STEP_AMOUNT: int = AMOUNT_OF_DAYS / STEP_SIZE
 
 
 func _ready():
-	test_object()
-
-
-func test_object():
 	var neow_object_json = load("res://src/manager/neow_object.json").get_data()
+	var output = parse_object_data(neow_object_json)
+	print(output.designation)
+
+
+func parse_object_data(neow_object_json) -> NeowObject:
 	var neow_object = NeowObject.new()
 	for i in neow_object_json.keys():
 		if i == "orbital_data":
@@ -30,6 +30,7 @@ func test_object():
 			neow_object.set(i, new_orbit_data)
 			continue
 		neow_object.set(i, neow_object_json[i])
+	return neow_object
 
 
 

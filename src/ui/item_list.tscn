@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://6pyj5fw2ha5l"]
+
+[ext_resource type="Script" path="res://src/ui/item_list.gd" id="1_l531c"]
+
+[node name="ItemList" type="PanelContainer"]
+script = ExtResource("1_l531c")
+
+[node name="ObjectList" type="ItemList" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(149.11, 83.19)
+layout_mode = 2
+item_count = 2
+item_0/text = "Test"
+item_1/text = "Second One!"

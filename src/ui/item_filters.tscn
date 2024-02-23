@@ -1,0 +1,44 @@
+[gd_scene load_steps=2 format=3 uid="uid://ch057gdfpa63q"]
+
+[ext_resource type="Script" path="res://src/ui/item_filters.gd" id="1_46yy1"]
+
+[node name="ItemFilters" type="PanelContainer"]
+offset_right = 231.0
+offset_bottom = 93.0
+script = ExtResource("1_46yy1")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Begin Date: "
+
+[node name="StartDateLabel" type="Label" parent="VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "2022-10-12"
+
+[node name="StartDateSlider" type="HSlider" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+step = 0.1
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "End Date   : "
+
+[node name="EndDateLabel" type="Label" parent="VBoxContainer/HBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "2022-10-12"
+
+[node name="EndDateSlider" type="HSlider" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
