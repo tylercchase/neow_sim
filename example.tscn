@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://vrqn1sidmohy"]
+[gd_scene load_steps=28 format=3 uid="uid://vrqn1sidmohy"]
 
 [ext_resource type="Shader" path="res://addons/naejimer_3d_planet_generator/shaders/clouds.gdshader" id="5_n28e4"]
 [ext_resource type="Script" path="res://src/manager/test_object.gd" id="5_wqh7s"]
@@ -15,19 +15,6 @@
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wv5xx"]
 albedo_color = Color(0.803922, 0.517647, 0, 1)
-
-[sub_resource type="Resource" id="Resource_8j0bo"]
-script = ExtResource("6_fxjm5")
-semi_major_axis = 1.158
-eccentricity = 0.277
-argument_periaps = 0.837
-longitude_ascending_node = 298.499
-eccentric_anomaly = 0.0
-inclination = 10.09
-true_anomaly = 100.821
-mean_anomaly = 100.821
-epoch_t0 = 1983.0
-epoch_t = 2035.26
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_c8avg"]
 render_priority = 0
@@ -143,18 +130,15 @@ glow_blend_mode = 0
 
 [node name="Planets" type="Node3D" parent="."]
 
-[node name="TestAsteroid" type="CSGSphere3D" parent="Planets" node_paths=PackedStringArray("neow_manager")]
+[node name="TestAsteroid" type="CSGSphere3D" parent="Planets"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -82.7789, 2.02049, 0.958599)
 radius = 1.417
 radial_segments = 27
 rings = 19
 material = SubResource("StandardMaterial3D_wv5xx")
-script = ExtResource("5_wqh7s")
-neow_manager = NodePath("../../NeowManager")
-kepler_data = SubResource("Resource_8j0bo")
 
 [node name="PlanetTerrestrial" type="MeshInstance3D" parent="Planets" node_paths=PackedStringArray("neow_manager")]
-transform = Transform3D(-0.998808, 0, -0.0453513, 0, 1, 0, 0.0453513, 0, -0.998808, 1.64038, 35.9732, -2.05518)
+transform = Transform3D(0.939722, 0, 0.341464, 0, 1, 0, -0.341464, 0, 0.939722, 1.64038, 35.9732, -2.05518)
 mesh = SubResource("SphereMesh_7wyn3")
 skeleton = NodePath(".")
 script = ExtResource("5_wqh7s")
@@ -181,7 +165,7 @@ anim_player = NodePath("../AnimationPlayer")
 parameters/TimeScale/scale = 0.08
 
 [node name="Star" parent="Planets" instance=ExtResource("6_7xwvl")]
-transform = Transform3D(3.02722, 0, -8.5499, 0, 9.07, 0, 8.5499, 0, 3.02722, 0, 0, 0)
+transform = Transform3D(-7.83669, 0, 4.56632, 0, 9.07, 0, -4.56632, 0, -7.83669, 0, 0, 0)
 layers = 2
 skeleton = NodePath("../..")
 
@@ -194,7 +178,8 @@ environment = SubResource("Environment_icub5")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 0)
 script = ExtResource("9_k7dhp")
 
-[node name="NeowManager" parent="." node_paths=PackedStringArray("test_node") instance=ExtResource("7_n7t7e")]
+[node name="NeowManager" parent="." node_paths=PackedStringArray("api_manager", "test_node") instance=ExtResource("7_n7t7e")]
+api_manager = NodePath("../APIManager")
 conversion_factor = 75.715
 test_node = NodePath("../Planets/TestAsteroid")
 

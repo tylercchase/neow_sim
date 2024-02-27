@@ -4,6 +4,10 @@
 
 [node name="APIManager" type="Node" node_paths=PackedStringArray("http_request")]
 script = ExtResource("1_ytgjc")
-http_request = NodePath("HTTPRequest")
+http_request = NodePath("ListRequest")
 
-[node name="HTTPRequest" type="HTTPRequest" parent="."]
+[node name="ListRequest" type="HTTPRequest" parent="."]
+unique_name_in_owner = true
+
+[node name="DetailedInfoRequest" type="HTTPRequest" parent="."]
+unique_name_in_owner = true

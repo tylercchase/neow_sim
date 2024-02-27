@@ -8,29 +8,30 @@ var AMOUNT_OF_DAYS: int = 49590
 var STEP_AMOUNT: int = AMOUNT_OF_DAYS / STEP_SIZE
 
 
+@export var api_manager: ApiManager
+
 @export var conversion_factor = 20.0
 @export var test_node: Node3D
 
+
+var current_orbiting_object
 
 
 
 func _ready():
 	var neow_object_json = load("res://src/manager/neow_object.json").get_data()
-	var output = parse_object_data(neow_object_json)
-	print(output.designation)
+	# var output = parse_object_data(neow_object_json)
+	# print(output.designation)
+	api_manager.detailed_info_loaded.connect(_on_detailed_info_loaded)
 
 
-func parse_object_data(neow_object_json) -> NeowObject:
-	var neow_object = NeowObject.new()
-	for i in neow_object_json.keys():
-		if i == "orbital_data":
-			var new_orbit_data = NeowObject.OrbitData.new()
-			for j in neow_object_json[i].keys():
-				new_orbit_data.set(j, neow_object_json[i][j])
-			neow_object.set(i, new_orbit_data)
-			continue
-		neow_object.set(i, neow_object_json[i])
-	return neow_object
+func _on_detailed_info_loaded(info: NeowObject):
+	if current_orbiting_object:
+		current_orbiting_object.queue_free()
+	var coords = keplerian_to_cartesian(info)
+	test_node.global_position = coords
+	# print(info)
+	print(coords)
 
 
 
@@ -80,8 +81,8 @@ func calc_algo(body: KeplerElements) -> Vector3:
 	rt.z = ot.x * sin(body.argument_periaps)*sin(body.inclination)+ot.y * cos(body.argument_periaps)*sin(body.inclination);
 	return rt
 
-func keplerian_to_cartesian(orbit: NeowObject.OrbitData):
-	print(orbit.orbital_data.eccentricity)
+func keplerian_to_cartesian(orbit: NeowObject):
+	# print(orbit.orbital_data.eccentricity)
 
 	var kepler_element := KeplerElements.new()
 	kepler_element.semi_major_axis = float(orbit.orbital_data.semi_major_axis)
