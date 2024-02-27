@@ -3,12 +3,20 @@
 [ext_resource type="Script" path="res://src/ui/item_list.gd" id="1_l531c"]
 
 [node name="ItemList" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
 script = ExtResource("1_l531c")
 
 [node name="ObjectList" type="ItemList" parent="."]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(149.11, 83.19)
 layout_mode = 2
-item_count = 2
+item_count = 4
 item_0/text = "Test"
 item_1/text = "Second One!"
+item_2/text = "t"
+item_3/text = "a"

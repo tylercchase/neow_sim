@@ -154,7 +154,7 @@ neow_manager = NodePath("../../NeowManager")
 kepler_data = SubResource("Resource_8j0bo")
 
 [node name="PlanetTerrestrial" type="MeshInstance3D" parent="Planets" node_paths=PackedStringArray("neow_manager")]
-transform = Transform3D(0.991859, 0, 0.126059, 0, 1, 0, -0.126059, 0, 0.991859, 1.64038, 35.9732, -2.05518)
+transform = Transform3D(-0.998808, 0, -0.0453513, 0, 1, 0, 0.0453513, 0, -0.998808, 1.64038, 35.9732, -2.05518)
 mesh = SubResource("SphereMesh_7wyn3")
 skeleton = NodePath(".")
 script = ExtResource("5_wqh7s")
@@ -181,7 +181,7 @@ anim_player = NodePath("../AnimationPlayer")
 parameters/TimeScale/scale = 0.08
 
 [node name="Star" parent="Planets" instance=ExtResource("6_7xwvl")]
-transform = Transform3D(5.28974, 0, 7.36774, 0, 9.07, 0, -7.36774, 0, 5.28974, 0, 0, 0)
+transform = Transform3D(3.02722, 0, -8.5499, 0, 9.07, 0, 8.5499, 0, 3.02722, 0, 0, 0)
 layers = 2
 skeleton = NodePath("../..")
 

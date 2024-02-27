@@ -20,6 +20,7 @@ horizontal_alignment = 1
 
 [node name="TabContainer" type="TabContainer" parent="VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 3
 
 [node name="Filters" type="VBoxContainer" parent="VBoxContainer/TabContainer"]
 layout_mode = 2

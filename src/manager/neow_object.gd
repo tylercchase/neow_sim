@@ -37,14 +37,3 @@ var is_postentially_hazardous_asteroid: bool
 var is_sentry_object: bool
 var orbital_data: OrbitData
 
-
-class NeowResponse:
-	var count
-	var near_earth_objects: Array[BasicNeowObject]
-
-
-class BasicNeowObject:
-	var link: String
-	var id: String
-	var name: String
-	var diameter
